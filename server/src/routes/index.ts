@@ -6,10 +6,10 @@ router.get('/', async (req, res) => {
     res.send('<h1>Hello from UbojniaBOT API</h1>');
 });
 
-import AuthRouter from "./auth";
+import AuthRouter from "./authRouter";
 router.use('/auth', AuthRouter);
 
-import APIRouter from './api/index';
+import APIRouter from './api/APIRouter';
 router.use('/api', requireAuth, APIRouter);
 
 

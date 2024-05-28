@@ -5,12 +5,13 @@ import { client } from './bot/client';
 import logger from './middleware/logger';
 import session from 'express-session'
 import indexRouter from './routes/index';
-import { TUser } from './database/models/app/user';
+import { TUser, UserType } from './database/models/app/user';
 import cors from 'cors'
+import { HydratedDocument } from 'mongoose';
 
 declare module "express-session" {
     interface SessionData {
-        user: TUser
+        user: HydratedDocument<TUser>,
     }
 }
 

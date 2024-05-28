@@ -1,5 +1,5 @@
 import express from 'express';
-import Users from '../database/models/app/user';
+import User from '../database/models/app/user';
 
 const router = express.Router();
 
@@ -28,8 +28,8 @@ router.post('/login', async (req, res) => {
     if (!username_or_email) return res.status(400).send({ message: 'No email or username provided' });
     if (!password) return res.status(400).send({ message: 'No password provided' });
 
-    let user = await Users.findOne({ username: username_or_email, password: password });
-    if (!user) await Users.findOne({ email: username_or_email, password: password });
+    let user = await User.findOne({ username: username_or_email, password: password });
+    if (!user) await User.findOne({ email: username_or_email, password: password });
     if (!user) return res.status(400).send({ message: 'User doesnt exists' });
 
     req.session.user = user;
@@ -46,10 +46,10 @@ router.post('/register', async (req, res) => {
 
     if (!username || !email || !password) return res.status(400).send({ message: 'Bad content' });
 
-    if (await Users.exists({ username: username}) || await Users.exists({ email: email}))
+    if (await User.exists({ username: username}) || await User.exists({ email: email}))
         return res.status(400).send({ message: 'User already exists' });
 
-    await Users.create({
+    await User.create({
         username: username,
         email: email,
         password: password,
