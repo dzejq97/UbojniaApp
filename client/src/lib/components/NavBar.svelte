@@ -13,6 +13,3 @@
         <UiButton style='primary'>Utwórz konto</UiButton>
     </div>
 </nav>
-<main class="bg-red-500 w-full h-96 mt-8">
-
-</main>
