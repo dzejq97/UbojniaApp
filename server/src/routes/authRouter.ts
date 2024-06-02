@@ -3,6 +3,14 @@ import User from '../database/models/app/user';
 
 const router = express.Router();
 
+router.get('/verify', async (req, res) => {
+    if (req.session.user) {
+        return res.status(200).send();
+    } else {
+        return res.status(401).send();
+    }
+})
+
 router.get('/me', async (req, res) => {
     if (req.session.user) {
         res.status(200).send( req.session.user );
@@ -24,6 +32,8 @@ router.post('/login', async (req, res) => {
 
     const username_or_email = req.body.username;
     const password = req.body.password;
+
+    console.log(req.body);
 
     if (!username_or_email) return res.status(400).send({ message: 'No email or username provided' });
     if (!password) return res.status(400).send({ message: 'No password provided' });

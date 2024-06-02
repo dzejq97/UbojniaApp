@@ -2,6 +2,7 @@ import express from "express";
 import Post from "../../database/models/app/post";
 import PostComment from "../../database/models/app/comment";
 import Like from "../../database/models/app/like";
+import User, { TUser } from "../../database/models/app/user";
 const router = express.Router();
 
 router.post('/create', async (req, res) => {
@@ -18,7 +19,7 @@ router.post('/create', async (req, res) => {
 });
 
 router.get('/latest', async (req, res) => {
-    const posts = await Post.find({}).sort({ createdAt: 1 }).limit(30);
+    const posts = await Post.find({}).sort({ createdAt: 1 }).limit(30).populate<{ author: TUser}>('author');
 
     if (!posts) return res.status(500).send('Internal error');
 

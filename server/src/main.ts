@@ -16,7 +16,10 @@ declare module "express-session" {
 }
 
 const server: Express = express();
-server.use(cors());
+server.use(cors({
+    credentials: true,
+    origin: true
+}));
 server.use(express.json());
 server.use(express.urlencoded({ extended: true}));
 server.use(cookieParser());

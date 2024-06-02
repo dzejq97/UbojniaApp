@@ -10,7 +10,8 @@ import AuthRouter from "./authRouter";
 router.use('/auth', AuthRouter);
 
 import APIRouter from './api/APIRouter';
-router.use('/api', requireAuth, APIRouter);
+//router.use('/api', requireAuth, APIRouter);
+router.use('/api', APIRouter);
 
 router.use((req, res) => {
     res.status(404);
