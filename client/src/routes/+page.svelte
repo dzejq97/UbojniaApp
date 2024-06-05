@@ -3,50 +3,32 @@
     import UiButton from '$lib/components/ui/UIButton.svelte';
     import Icon from '@iconify/svelte';
 	import doFetch from '$lib/doFetch';
-	import { redirect } from '@sveltejs/kit';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-
-    onMount( async () => {
-        const res = await doFetch('/auth/verify', { method: 'GET' });
-        if (res.status === 200) goto('/portal');
+    import { session, signIn } from '$lib/session';
+    
+    onMount(() => {
+        if ($session.authorized) return goto('/portal');    
     })
-
-
 
     let username = '';
     let password = '';
     let error = '';
 
     const login = async () => {
-        if (!username || !password) {
-            error = 'Musisz wypełnić wszystkie pola';
-            return;
+        if (!username || !password) { 
+            return error = 'Musisz uzupełnić wszystkie pola'
         }
 
-        if (username.length > 32 || password.length > 32) {
-            return error = 'Nazwa użytkowniak lub hasło za długie';
-        }
-        
-        const res = await doFetch('/auth/login', {
-            method: 'POST',
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
-        });
-
-        if (res.status === 200) {
-            return goto('/portal');
-        } else {
-            return error = 'Nieprawidłowy login lub hasło';
-        }
+        const status = await signIn({ username: username, password: password });
+        if (status) return goto('/portal')
+        else return error = 'Niepoprawna nazwa użytkownika lub hasło'
     }
 
 </script>
 
 <main class="">
-    <section class="flex flex-col lg:flex-row justify-around items-baseline mt-16">
+    <section class="flex flex-col lg:flex-row justify-around items-baseline mt-28">
         <div class="">
             <div class="blob1 flex flex-col gap-4">
                 <span class="title">UBOJNIA</span>
@@ -66,15 +48,20 @@
             </div>
            
         </div>
-        <div class="border border-black bg-light_container border-opacity-5 px-12 py-8 rounded-xl shadow flex flex-col justify-center items-center gap-2">
-            <span class="font-semibold w-full text-center">Zaloguj się</span>
-            <UiInput placeholder='Nazwa użytkownika' icon='mdi:user' bind:content={username}></UiInput>
-            <UiInput placeholder='Hasło' type='password' icon='mdi:password' bind:content={password}></UiInput>
-            <UiButton size='small' style='primary' on:click={login}>Zaloguj</UiButton>
-            <div class="error" class:error>
-                {error}
+        <div class="flex flex-col items-center justify-center gap-4">
+            <div class="border border-black bg-light_container border-opacity-5 px-12 py-8 rounded-xl shadow flex flex-col justify-center items-center gap-2">
+                <span class="font-semibold w-full text-center">Zaloguj się</span>
+                <UiInput placeholder='Nazwa użytkownika' icon='mdi:user' bind:content={username}></UiInput>
+                <UiInput placeholder='Hasło' type='password' icon='mdi:password' bind:content={password}></UiInput>
+                <UiButton size='small' style='primary' on:click={login}>Zaloguj</UiButton>
+                <div class:error>
+                    {error}
+                </div>
             </div>
+            <span>lub</span>
+            <UiButton style='secondary'>Utwórz konto</UiButton>
         </div>
+        
     </section>
 </main>
 

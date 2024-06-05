@@ -7,6 +7,8 @@ export default (endpoint: string, data: IFetchData): Promise<Response> => {
     const res = fetch(`http://localhost:5003${endpoint}`, {
         method: data.method,
         credentials: 'include',
+        mode: 'cors',
+        cache: 'no-cache',
         headers: {
             'content-type': 'application/json'
         },

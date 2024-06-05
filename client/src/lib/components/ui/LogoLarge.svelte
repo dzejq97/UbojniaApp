@@ -1,4 +1,9 @@
-<a href="/">
+<script lang="ts">
+    import {session} from '$lib/session';
+    let redirect: string = $session.authorized ? '/portal' : '/';
+</script>
+
+<a href={redirect}>
     <div class="text-2xl hover:drop-shadow"> 
         <span class="ubojnia">UBOJNIA</span>Mikroblog
     </div>
@@ -14,6 +19,6 @@
 
     .ubojnia {
         font-weight: 700;
-        @apply text-accent;
+        @apply text-primary;
     }
 </style>

@@ -3,14 +3,6 @@ import User from '../database/models/app/user';
 
 const router = express.Router();
 
-router.get('/verify', async (req, res) => {
-    if (req.session.user) {
-        return res.status(200).send();
-    } else {
-        return res.status(401).send();
-    }
-})
-
 router.get('/me', async (req, res) => {
     if (req.session.user) {
         res.status(200).send( req.session.user );
@@ -44,7 +36,7 @@ router.post('/login', async (req, res) => {
 
     req.session.user = user;
 
-    res.status(200).send({ message: 'Logged in' });
+    res.status(200).send({ message: 'Logged in', user: user });
 });
 
 router.post('/register', async (req, res) => {
