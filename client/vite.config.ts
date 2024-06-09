@@ -9,5 +9,9 @@ export default defineConfig({
 	},
 	server: {
 		port: process.env.PORT,
+		proxy: {
+			'/api': 'http://localhost:5003/api',
+			'/auth': 'http://localhost:5003/auth'
+		}
 	}
 });

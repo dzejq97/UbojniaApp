@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
-
 </script>
 
 <div class="flex flex-wrap gap-10 items-center justify-center">

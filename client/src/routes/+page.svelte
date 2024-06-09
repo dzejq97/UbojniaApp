@@ -5,11 +5,7 @@
 	import doFetch from '$lib/doFetch';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-    import { session, signIn } from '$lib/session';
-    
-    onMount(() => {
-        if ($session.authorized) return goto('/portal');    
-    })
+    import { signIn } from '$lib/sessionStore';
 
     let username = '';
     let password = '';
@@ -23,6 +19,10 @@
         const status = await signIn({ username: username, password: password });
         if (status) return goto('/portal')
         else return error = 'Niepoprawna nazwa użytkownika lub hasło'
+    }
+
+    const register = async () => {
+        await goto('/register');
     }
 
 </script>
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <span>lub</span>
-            <UiButton style='secondary'>Utwórz konto</UiButton>
+            <UiButton style='secondary' on:click={register}>Utwórz konto</UiButton>
         </div>
         
     </section>
@@ -79,7 +79,7 @@ a:hover {
 
 .blob1 {
     transform: rotate(-2deg);
-    background: linear-gradient(30deg, rgb(199, 85, 248) 30%, rgb(57, 136, 254) 80%);
+    background: linear-gradient(30deg, #c755f8 30%, rgb(57, 136, 254) 80%);
     padding: 7rem;
     border-radius:27% 73% 39% 61% / 27% 42% 68% 73%;
     @apply shadow-xl border border-black border-opacity-10;

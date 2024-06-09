@@ -6,7 +6,6 @@ const router = express.Router();
 router.get('/me', async (req, res) => {
     if (req.session.user) {
         res.status(200).send( req.session.user );
-
     } else {
         res.status(401).send({ message: 'Unauthenticated' });
     }
@@ -25,7 +24,6 @@ router.post('/login', async (req, res) => {
     const username_or_email = req.body.username;
     const password = req.body.password;
 
-    console.log(req.body);
 
     if (!username_or_email) return res.status(400).send({ message: 'No email or username provided' });
     if (!password) return res.status(400).send({ message: 'No password provided' });
@@ -49,7 +47,7 @@ router.post('/register', async (req, res) => {
     if (!username || !email || !password) return res.status(400).send({ message: 'Bad content' });
 
     if (await User.exists({ username: username}) || await User.exists({ email: email}))
-        return res.status(400).send({ message: 'User already exists' });
+        return res.status(409).send({ message: 'User already exists' });
 
     await User.create({
         username: username,

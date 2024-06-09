@@ -1,6 +1,6 @@
 <script lang="ts">
-    import {session} from '$lib/session';
-    let redirect: string = $session.authorized ? '/portal' : '/';
+    import {session} from '$lib/sessionStore';
+    let redirect: string = $session.authenticated ? '/portal' : '/';
 </script>
 
 <a href={redirect}>

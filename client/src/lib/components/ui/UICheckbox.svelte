@@ -9,6 +9,7 @@
   
   <style lang="postcss">
     label {
+      @apply text-base;
       position: relative;
       padding-left: 30px;
       cursor: pointer;
