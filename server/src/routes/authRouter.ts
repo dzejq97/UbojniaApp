@@ -24,7 +24,6 @@ router.post('/login', async (req, res) => {
     const username_or_email = req.body.username;
     const password = req.body.password;
 
-
     if (!username_or_email) return res.status(400).send({ message: 'No email or username provided' });
     if (!password) return res.status(400).send({ message: 'No password provided' });
 

@@ -4,7 +4,6 @@ import UiButton from "$lib/components/ui/UIButton.svelte";
 import UiInput from "$lib/components/ui/UIInput.svelte";
 import UiCheckbox from '$lib/components/ui/UICheckbox.svelte';
 import NavBar from "$lib/components/NavBar.svelte";
-	import doFetch from "$lib/doFetch";
 	import { goto } from "$app/navigation";
 
 let username = '';
@@ -25,10 +24,13 @@ const submitRegister = async () => {
 
     if (errors.length) return;
 
-    const res = await doFetch('/auth/register', {
+    const res = await fetch('/auth/register', {
         method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
         body: JSON.stringify({
-        username: username,
+            username: username,
             email: email,
             password: password,
         })

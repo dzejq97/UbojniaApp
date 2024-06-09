@@ -13,8 +13,8 @@ import APIRouter from './api/APIRouter';
 //router.use('/api', requireAuth, APIRouter);
 router.use('/api', APIRouter);
 
-router.use((req, res) => {
-    res.status(404);
+router.use('*', (req, res) => {
+    res.status(404).send();
 });
 
 

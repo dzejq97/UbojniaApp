@@ -1,6 +1,7 @@
 <script lang="ts">
     import '../app.css';
     import { session } from '$lib/sessionStore';
+	import { onMount } from 'svelte';
     export let data;
     if (data.authenticated) {
         $session.authenticated = true;

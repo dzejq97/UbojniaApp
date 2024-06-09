@@ -2,7 +2,6 @@
     import UiInput from '$lib/components/ui/UIInput.svelte';
     import UiButton from '$lib/components/ui/UIButton.svelte';
     import Icon from '@iconify/svelte';
-	import doFetch from '$lib/doFetch';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
     import { signIn } from '$lib/sessionStore';
@@ -20,11 +19,6 @@
         if (status) return goto('/portal')
         else return error = 'Niepoprawna nazwa użytkownika lub hasło'
     }
-
-    const register = async () => {
-        await goto('/register');
-    }
-
 </script>
 
 <main class="">
@@ -59,7 +53,7 @@
                 </div>
             </div>
             <span>lub</span>
-            <UiButton style='secondary' on:click={register}>Utwórz konto</UiButton>
+            <UiButton style='secondary' on:click={() => goto('/register')}>Utwórz konto</UiButton>
         </div>
         
     </section>

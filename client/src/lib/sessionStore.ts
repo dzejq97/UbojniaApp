@@ -1,6 +1,5 @@
 import { writable } from "svelte/store";
 import type { TUser } from './interfaces/user';
-import doFetch from "./doFetch";
 
 export interface ISession {
     authenticated: boolean;
@@ -10,8 +9,11 @@ export interface ISession {
 export const session = writable(<ISession>{ authenticated: false});
 
 export const signIn = async (body: ISignInBody): Promise<boolean> => {
-    const res = await doFetch('/auth/login', { 
+    const res = await fetch('/auth/login', {
         method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
         body: JSON.stringify(body)
     });
 
@@ -27,7 +29,7 @@ export const signIn = async (body: ISignInBody): Promise<boolean> => {
     }
 };
 export const signOut = async () => {
-    await doFetch('/auth/logout', { method: 'POST'});
+    await fetch('/auth/logout', { method: 'POST'});
     session.set({ authenticated: false, user: undefined});
 }
 
