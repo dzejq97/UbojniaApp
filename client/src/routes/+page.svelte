@@ -3,7 +3,6 @@
     import UiButton from '$lib/components/ui/UIButton.svelte';
     import Icon from '@iconify/svelte';
 	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
     import { signIn } from '$lib/sessionStore';
 
     let username = '';

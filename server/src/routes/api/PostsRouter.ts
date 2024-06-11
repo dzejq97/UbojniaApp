@@ -1,12 +1,12 @@
 import express from "express";
 import Post from "../../database/models/app/post";
-import PostComment from "../../database/models/app/comment";
+import PostComment, { TPostComment } from "../../database/models/app/comment";
 import Like from "../../database/models/app/like";
 import User, { TUser } from "../../database/models/app/user";
 const router = express.Router();
 
 router.post('/create', async (req, res) => {
-    if (!req.session.user) return res.status(500).send('Internal error');
+    if (!req.session.user) return res.status(401).send('Internal error');
     const content = req.body.content as string | null | undefined;
     if (!content || !content.length) return res.status(400).send('Content not provided');
 
@@ -14,12 +14,13 @@ router.post('/create', async (req, res) => {
         content: content,
         author: req.session.user._id,
     });
+    await User.findOneAndUpdate({ _id: req.session.user._id}, { $push: { posts: post._id }})
     
     res.send(post);
 });
 
 router.get('/latest', async (req, res) => {
-    const posts = await Post.find({}).sort({ createdAt: 1 }).limit(30).populate<{ author: TUser}>('author');
+    const posts = await Post.find({}).sort({ createdAt: -1 }).limit(30).populate<{ author: TUser, comments: TPostComment}>(['author', 'comments']);
 
     if (!posts) return res.status(500).send('Internal error');
 
@@ -37,7 +38,7 @@ router.get('/:postID', async (req, res) => {
     }
 })
 
-router.post('/:postID/addcomment', async (req, res) => {
+router.post('/:postID/comment', async (req, res) => {
     const postID = req.params.postID;
     const content = req.body.content as string | null | undefined;
     if (!content || !content.length) return res.status(400).send('Content not provided');

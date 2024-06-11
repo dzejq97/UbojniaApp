@@ -1,5 +1,6 @@
 import express from 'express';
 import User from '../database/models/app/user';
+import hash from '../utils/hash';
 
 const router = express.Router();
 
@@ -27,8 +28,8 @@ router.post('/login', async (req, res) => {
     if (!username_or_email) return res.status(400).send({ message: 'No email or username provided' });
     if (!password) return res.status(400).send({ message: 'No password provided' });
 
-    let user = await User.findOne({ username: username_or_email, password: password });
-    if (!user) await User.findOne({ email: username_or_email, password: password });
+    let user = await User.findOne({ username: username_or_email, password: hash(password) });
+    if (!user) await User.findOne({ email: username_or_email, password: hash(password) });
     if (!user) return res.status(400).send({ message: 'User doesnt exists' });
 
     req.session.user = user;
@@ -51,7 +52,7 @@ router.post('/register', async (req, res) => {
     await User.create({
         username: username,
         email: email,
-        password: password,
+        password: hash(password),
     });
 
     res.status(200).send({ message: 'Success' });
