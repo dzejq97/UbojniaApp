@@ -33,6 +33,40 @@
 
 </script>
 
+
+<div class="post px-4 py-2">
+    <div class="author flex items-center gap-4">
+        <div class="avatar rounded-full bg-slate-500 w-12 h-12"></div>
+        <div class="">
+            <h1>
+                {#if post_data.topic}
+                <span class="text-base font-medium">{ post_data.author.username }</span><span class="text-base font-light">@{post_data.topic}</span>
+                {:else}
+                <span>{ post_data.author.username }</span>
+                {/if}
+            </h1>
+            <h2 class="text-xs">{ post_data.createdAt }</h2>
+        </div>
+        <div class="ml-auto flex items-center gap-4">
+            <span class="font-medium">{ post_likes }</span>
+            <button on:click={submitLike} class="post_like text-3xl pr-4 hover:text-primary">
+                <Icon icon='iconamoon:like-light'/>
+            </button>
+        </div>
+    </div>
+    <div class="mt-4">
+        <p>{@html marked(post_data.content)}</p>
+    </div>
+    <div>
+        {#each post_data.comments as comment}
+            <div>
+                { comment.author }
+            </div>
+            
+        {/each}
+    </div>
+</div>
+
 <div class="post">
     <div class="post_content flex justify-start items-center">
         <div class="author bg-primary h-14 text-light px-8 flex items-center justify-center">

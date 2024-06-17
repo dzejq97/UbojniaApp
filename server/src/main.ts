@@ -5,7 +5,7 @@ import { client } from './bot/client';
 import logger from './middleware/logger';
 import session from 'express-session'
 import indexRouter from './routes/index';
-import { TUser, UserType } from './database/models/app/user';
+import { TUser, UserType } from './database/models/app/User';
 import cors from 'cors'
 import { HydratedDocument } from 'mongoose';
 

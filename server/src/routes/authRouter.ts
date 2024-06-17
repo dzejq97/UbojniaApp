@@ -1,5 +1,5 @@
 import express from 'express';
-import User from '../database/models/app/user';
+import User from '../database/models/app/User';
 import hash from '../utils/hash';
 
 const router = express.Router();

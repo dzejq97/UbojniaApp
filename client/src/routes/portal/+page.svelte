@@ -39,7 +39,7 @@
         </button>
     </section>
 
-    <section class="flex flex-col w-10/12 bg-light px-28 gap-4">
+    <section class="flex flex-col w-10/12 px-28 gap-4">
         {#each data.latest_posts as post}
             <Post post_data={post}/>
         {/each}
