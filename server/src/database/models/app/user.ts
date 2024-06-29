@@ -10,8 +10,9 @@ export type TUser = {
     comments: Types.ObjectId[],
     commentsReplies: Types.ObjectId[]
 }
+
 export type UserType = Model<TUser>;
-const User: UserType = db_app.model<TUser, UserType>('User', new Schema<TUser, UserType>({
+const UserModel: UserType = db_app.model<TUser, UserType>('User', new Schema<TUser, UserType>({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false },
@@ -20,4 +21,4 @@ const User: UserType = db_app.model<TUser, UserType>('User', new Schema<TUser, U
     comments: [{ type: Schema.Types.ObjectId, ref: 'PostComment'}],
     commentsReplies: [{ type: Schema.Types.ObjectId, ref: 'PostCommentReply'}]
 }));
-export default User;
+export default UserModel;

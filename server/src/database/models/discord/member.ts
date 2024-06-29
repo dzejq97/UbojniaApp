@@ -1,8 +1,8 @@
 import { Schema, model, Model, HydratedDocument, Types } from "mongoose";
 import { db_discord } from "../../mongo";
 import { Guild, GuildMember } from "discord.js";
-import { client } from "../../../bot/client";
-import { rolesToIDArray } from "../../../bot/utils/roles";
+import { client } from "../../../services/bot/client";
+import { rolesToIDArray } from "../../../services/bot/utils/roles";
 import { TWarn } from "./warn";
 
 export type TMember = {

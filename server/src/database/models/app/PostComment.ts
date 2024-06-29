@@ -1,6 +1,5 @@
-import { Model, Schema, Types } from "mongoose"
+import { HydratedDocument, Model, Schema, Types } from "mongoose"
 import { db_app } from "../../mongo";
-import { TUser } from "./User";
 
 export type TPostComment = {
     author: Types.ObjectId,
@@ -11,8 +10,8 @@ export type TPostComment = {
     likes: Types.ObjectId[],
 }
 
-export type PostCommentType = Model<TPostComment>;
-const PostComment = db_app.model<TPostComment, PostCommentType>('PostComment', new Schema({
+type PostCommentType = Model<TPostComment>;
+const PostCommentModel = db_app.model<TPostComment, PostCommentType>('PostComment', new Schema({
     author: { type: Schema.Types.ObjectId, ref: 'User'},
     post: { type: Schema.Types.ObjectId, ref: 'Post'},
     createdAt: { type: Date, default: () => Date.now()},
@@ -20,5 +19,5 @@ const PostComment = db_app.model<TPostComment, PostCommentType>('PostComment', n
     replies: [{ type: Schema.Types.ObjectId, ref: 'PostCommentReply'}],
     likes: [{ type: Schema.Types.ObjectId, ref: 'Like'}]
 }));
-export default PostComment;
+export default PostCommentModel;
 

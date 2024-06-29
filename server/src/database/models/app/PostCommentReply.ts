@@ -1,4 +1,4 @@
-import { Model, Schema, Types } from "mongoose"
+import { HydratedDocument, Model, Schema, Types } from "mongoose"
 import { db_app } from "../../mongo";
 
 export type TPostCommentReply = {
@@ -10,11 +10,11 @@ export type TPostCommentReply = {
 }
 
 export type PostCommentReplyType = Model<TPostCommentReply>;
-const PostCommentReply = db_app.model<TPostCommentReply, PostCommentReplyType>('PostCommentReply', new Schema({
+const PostCommentReplyModel = db_app.model<TPostCommentReply, PostCommentReplyType>('PostCommentReply', new Schema({
     author: { type: Schema.Types.ObjectId, ref: 'User' },
     comment: { type: Schema.Types.ObjectId, ref: 'PostComment'},
     createdAt: { type: Date, default: () => Date.now() },
     content: { type: String, required: true },
     likes: [{ type: Schema.Types.ObjectId, ref: 'Like'}]
 }))
-export default PostCommentReply;
+export default PostCommentReplyModel;

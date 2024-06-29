@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import TEvent from "./types/TEvent";
 import TCommand from "./types/TCommand";
-import config from "../config";
+import config from "../../config";
 
 export class UClient extends Client {
     config = config;

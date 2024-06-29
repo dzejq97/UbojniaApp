@@ -1,17 +1,18 @@
 import 'dotenv/config';
 import express, { Express } from "express";
 import cookieParser from 'cookie-parser';
-import { client } from './bot/client';
+import { client } from './services/bot/client';
 import logger from './middleware/logger';
 import session from 'express-session'
-import indexRouter from './routes/index';
+import router from './routes/router';
 import { TUser, UserType } from './database/models/app/User';
 import cors from 'cors'
 import { HydratedDocument } from 'mongoose';
+import AuthService from './services/auth';
 
 declare module "express-session" {
     interface SessionData {
-        user: HydratedDocument<TUser>,
+        user: AuthService.ISessionUser,
     }
 }
 
@@ -34,7 +35,7 @@ server.use(session({
 }))
 server.use(logger);
 
-server.use('/', indexRouter);
+server.use('/', router);
 
 (async () => {
         server.listen(process.env.PORT || 8080, () => {

@@ -1,7 +1,7 @@
 import { Events, embedLength } from "discord.js"
 import TEvent from "../types/TEvent"
 import { client as c } from "../client"
-import { createMember, getMember, memberExists } from "../../database/models/discord/member";
+import { createMember, getMember, memberExists } from "../../../database/models/discord/member";
 
 export default <TEvent>{
     name: Events.ClientReady,

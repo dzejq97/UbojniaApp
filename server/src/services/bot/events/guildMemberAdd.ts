@@ -1,6 +1,6 @@
 import { Events, GuildMember } from "discord.js";
 import TEvent from "../types/TEvent";
-import Members, { createMember, getMember, memberExists } from "../../database/models/discord/member";
+import Members, { createMember, getMember, memberExists } from "../../../database/models/discord/member";
 import { IDsToRoleArray, rolesToIDArray } from "../utils/roles";
 
 export default <TEvent>{
